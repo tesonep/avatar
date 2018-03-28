@@ -6,7 +6,16 @@ sendTo: anObject
 		^ anObject perform: message selector withArguments: message arguments.
 	].
 
-	method := AvDelegationMethodProvider uniqueInstance delegationMethodFor: (target lookupSelector: message selector).
+	method := target lookupSelector: message selector.
+
+	(self shouldExecuteOnTarget: method) ifTrue: [ 
+		^ MirrorPrimitives
+			withReceiver: instance
+			andArguments: message arguments
+			execute: method
+	].
+
+	method := AvDelegationMethodProvider uniqueInstance delegationMethodFor: method.
 
 	^ MirrorPrimitives
 			withReceiver: instance

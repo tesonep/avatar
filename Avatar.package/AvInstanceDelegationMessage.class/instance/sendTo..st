@@ -8,6 +8,12 @@ sendTo: anObject
 
 	method := target lookupSelector: message selector.
 
+	method ifNil: [ 
+		MessageNotUnderstood new 
+			message: ((Message selector: message selector arguments: message arguments) lookupClass: target class; yourself);
+			receiver: target;
+			signal ].
+
 	(self shouldExecuteOnTarget: method) ifTrue: [ 
 		^ MirrorPrimitives
 			withReceiver: instance

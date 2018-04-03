@@ -4,6 +4,7 @@ delegationMethodFor: aMethod primitivesToRewrite: aBlock
 	"This method creates a new method rewritten when a primitive is call or when a inst variable is assigned. It receives a block that is evaluated in the method, to check if the primitive should be rewriten or not"
 	
 	| delegationMethod |
+		
 	(aBlock value: aMethod) ifTrue: [ ^ self rewritePrimitive: aMethod ].
 	aMethod hasInstVarRef ifFalse: [ ^ aMethod ].
 	

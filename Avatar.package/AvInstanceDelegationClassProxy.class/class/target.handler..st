@@ -8,6 +8,8 @@ target: anObject handler: aHandler
 	
 	methodDictionary := MethodDictionary new.
 	methodDictionary at: #doesNotUnderstand: put: (self class >> #instanceDoesNotUnderstand:).
+	methodDictionary at: #_instance:doesNotUnderstand: put: (self >> #_instance:doesNotUnderstand:).
+
 	MirrorPrimitives fixedFieldOf: proxy at: (self slotNamed: #methodDictionary) index put: methodDictionary.
 	
 	MirrorPrimitives fixedFieldOf: proxy at: (self slotNamed: #target) index put: anObject.
